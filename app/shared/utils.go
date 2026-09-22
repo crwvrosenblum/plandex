@@ -78,11 +78,14 @@ func AddLineNums(s string) LineNumberedTextType {
 }
 
 func AddLineNumsWithPrefix(s, prefix string) LineNumberedTextType {
-	var res string
-	for i, line := range strings.Split(s, "\n") {
-		res += fmt.Sprintf("%s%d: %s\n", prefix, i+1, line)
+	var res strings.Builder
+	for i, line := range strings.SplitAfter(s, "\n") {
+		if line == "" {
+			continue
+		}
+		fmt.Fprintf(&res, "%s%d: %s", prefix, i+1, line)
 	}
-	return LineNumberedTextType(res)
+	return LineNumberedTextType(res.String())
 }
 
 func RemoveLineNums(s LineNumberedTextType) string {
