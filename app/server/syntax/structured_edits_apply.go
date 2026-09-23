@@ -271,7 +271,11 @@ func ApplyChanges(
 					fmt.Println("adding ... existing code ... to end of file")
 				}
 
-				proposedLines = append(proposedLines, "")
+				// A terminal newline already provides the empty split element needed
+				// for the synthetic reference. Appending another adds a blank line.
+				if proposedLines[len(proposedLines)-1] != "" {
+					proposedLines = append(proposedLines, "")
+				}
 				references = append(references, Reference(len(proposedLines)))
 			}
 		}
