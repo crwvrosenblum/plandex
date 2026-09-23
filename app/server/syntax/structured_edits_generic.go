@@ -232,7 +232,11 @@ func ExecApplyGeneric(
 				fmt.Printf("numRefs == 1, refStart: %d, oLineNum: %d\n", refStart, oLineNum)
 			}
 
-			write(strings.Join(fullRef, "\n"), !eof)
+			// An empty reference range contributes no text or separator.
+			// A nonempty range containing a blank source line must still be preserved.
+			if len(fullRef) > 0 {
+				write(strings.Join(fullRef, "\n"), !eof)
+			}
 
 			postRefContent := postRefBuffers[0].String()
 
