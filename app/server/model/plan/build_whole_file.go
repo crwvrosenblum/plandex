@@ -37,8 +37,7 @@ func (fileState *activeBuildStreamFileState) buildWholeFileFallback(buildCtx con
 
 	baseModelConfig := config.GetBaseModelConfig(authVars, fileState.settings, fileState.orgUserConfig)
 
-	originalFileWithLineNums := shared.AddLineNums(originalFile)
-	proposedContentWithLineNums := shared.AddLineNums(proposedContent)
+	originalFileWithLineNums, proposedContentWithLineNums := numberBuildPromptFiles(originalFile, proposedContent)
 
 	sysPrompt, headNumTokens := prompts.GetWholeFilePrompt(filePath, originalFileWithLineNums, proposedContentWithLineNums, desc, comments)
 

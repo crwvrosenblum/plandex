@@ -209,8 +209,7 @@ func (fileState *activeBuildStreamFileState) buildValidate(
 		return buildValidateResult{}, fmt.Errorf("error getting diffs: %v", err)
 	}
 
-	originalWithLineNums := shared.AddLineNums(originalFile)
-	proposedWithLineNums := shared.AddLineNums(proposedContent)
+	originalWithLineNums, proposedWithLineNums := numberBuildPromptFiles(originalFile, proposedContent)
 
 	maxExpectedOutputTokens := shared.GetNumTokensEstimate(originalFile)/2 + shared.GetNumTokensEstimate(proposedContent)
 
